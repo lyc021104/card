@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>全国青少年无人机大赛用户管理系统</title>
+<link rel="icon" href="assets/favicon.ico" type="image/x-icon">
+<script>
+  // 与原网页一致的动态字体基准：屏幕宽 ≤375px 时为 10px，随宽度增大，到 750px 时封顶 12px
+  (function () {
+    function setRootFontSize() {
+      var base = 375, size = 10;
+      var c = document.documentElement.clientWidth;
+      if (c > 750) c = 750;
+      if (c > base) size += c / base;
+      document.documentElement.style.fontSize = size + 'px';
+    }
+    setRootFontSize();
+    window.addEventListener('resize', setRootFontSize);
+  })();
+</script>
+<style>
+  /* 1rem = 10px（无 JS 时的兜底基准，JS 会按屏幕宽度动态覆盖） */
+  html { font-size: 10px; }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei",
+                 "Segoe UI", Roboto, sans-serif;
+    background: #f5f7fa;
+    color: #333;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    width: 100%;
+    min-height: 100vh;
+    position: relative;
+  }
+
+  /* ===== 顶部导航栏 ===== */
+  .header_module {
+    height: 4.4rem;
+    background: #fff;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 .8rem;
+    position: relative;
+    z-index: 2005;
+  }
+  .header_module .left { display: flex; }
+  .header_module .left .ic {
+    padding: 0 .5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+  .header_module .hmiddle {
+    font-weight: 600;
+    font-size: 1.8rem;
+    color: #333;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .header_module .right { width: 3.4rem; }
+
+  /* ===== 品牌 logo 横幅 ===== */
+  .brand-logo {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  /* ===== 证书列表 ===== */
+  .data_list {
+    margin: 0 .8rem;
+    padding-top: .2rem;
+    padding-bottom: 1.2rem;
+  }
+  .data_list .item {
+    display: flex;
+    background-color: #fff;
+    padding: 1.2rem;
+    position: relative;
+    border-radius: .8rem;
+    overflow: hidden;
+    margin-top: 1rem;
+  }
+  /* 学生信息卡 */
+  .data_list .item.student-card { align-items: center; }
+  .data_list .item .img {
+    width: 8.8rem;
+    height: 12.32rem;
+    margin-right: .8rem;
+    border-radius: .5rem;
+    object-fit: cover;
+    flex: 0 0 8.8rem;
+  }
+  .data_list .item .info { flex: 1; min-width: 0; }
+  .data_list .item .info .name {
+    font-weight: 600;
+    font-size: 1.7rem;
+    color: #333;
+    line-height: 2.1rem;
+    width: 75%;
+  }
+  .data_list .item .info .student {
+    font-weight: 400;
+    font-size: 1.4rem;
+    color: #4f5a70;
+    margin-top: .4rem;
+    line-height: 1.8rem;
+  }
+  .data_list .item .info .attr {
+    font-weight: 400;
+    font-size: 1.4rem;
+    color: #959ca9;
+    line-height: 1.8rem;
+    margin-top: .5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    word-break: break-all;
+  }
+  .data_list .item .info .attr span { color: #00a0e9; cursor: pointer; flex-shrink: 0; }
+  .data_list .item .info .attr.block { display: block; }
+  /* 右上角奖项标签 */
+  .data_list .item .jiang {
+    position: absolute;
+    width: 8rem;
+    line-height: 4rem;
+    background: rgba(255, 143, 60, .08);
+    border-radius: 0 .8rem 0 .8rem;
+    right: 0;
+    top: 0;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #ff8f3c;
+    text-align: center;
+    z-index: 2;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- 顶部导航栏 -->
+  <header class="header_module">
+    <div class="left">
+      <div class="ic" onclick="history.back()">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 19l-7-7 7-7"/></svg>
+      </div>
+    </div>
+    <div class="hmiddle">证书列表</div>
+    <div class="right"></div>
+  </header>
+
+  <!-- 品牌 logo 横幅 -->
+  <img class="brand-logo" src="assets/logo-wide.jpg" alt="全国青少年无人机大赛">
+
+  <!-- 证书列表 -->
+  <section class="data_list" id="result">
+
+    <!-- 学生信息卡 -->
+    <div class="item student-card">
+      <img class="img" src="assets/header.jpg" alt="照片">
+      <div class="info">
+        <div class="name">郦铭浩</div>
+        <div class="student">上海市浦东新区莲溪小学（上海市浦东新区莲溪乒乓球小学）</div>
+      </div>
+    </div>
+
+    <!-- 证书一：国赛 -->
+    <div class="item">
+      <div class="info">
+        <div class="name">第十届全国青少年无人机大赛总决赛</div>
+        <div class="attr block">任务：空中阻击任务（小学组）</div>
+        <div class="attr">层级：国赛</div>
+        <div class="attr">单位：上海市浦东新区莲溪小学（上海市浦东新区莲溪乒乓球小学）</div>
+        <div class="attr">指导老师：李一初</div>
+        <div class="attr">证书编号：EDE10A1000720S021X0527</div>
+        <div class="attr block"><span onclick="window.open('assets/cert-guosai.jpg','_blank')">查看证书</span></div>
+      </div>
+      <div class="jiang">二等奖</div>
+    </div>
+
+    <!-- 证书二：市赛 -->
+    <div class="item">
+      <div class="info">
+        <div class="name">第十届全国青少年无人机大赛（上海市赛）</div>
+        <div class="attr block">任务：空中阻击任务（小学组）</div>
+        <div class="attr">层级：省赛</div>
+        <div class="attr">单位：上海市浦东新区莲溪小学（上海市浦东新区莲溪乒乓球小学）</div>
+        <div class="attr">指导老师：李一初</div>
+        <div class="attr">证书编号：EDE10B0310720S021X0045</div>
+        <div class="attr block"><span onclick="window.open('assets/cert-shisai.jpg','_blank')">查看证书</span></div>
+      </div>
+      <div class="jiang">三等奖</div>
+    </div>
+
+  </section>
+
+</div>
+
+</body>
+</html>
